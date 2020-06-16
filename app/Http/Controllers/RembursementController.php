@@ -19,7 +19,7 @@ class RembursementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function create()
     {
         $rembursements = Rembursement::where('users_id', Auth::id())->get();
         return view('rembursement.index', compact([
@@ -32,7 +32,7 @@ class RembursementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function index()
     {
         return view('rembursement.create');
     }
@@ -47,6 +47,9 @@ class RembursementController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'image' => 'required|mimes:jpeg,jpg,png,gif|max:10000',
+            'nominal' => 'required',
+            'date' => 'required',
+            'keterangan' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -63,7 +66,10 @@ class RembursementController extends Controller
         Rembursement::create([
             'users_id' => Auth::id(),
             'image' => $path,
-            'status' => 0
+            'status' => 0,
+            'nominal' => $request->nominal,
+            'date' => $request->date,
+            'description' => $request->keterangan
         ]);
 
         return redirect('/')->with([

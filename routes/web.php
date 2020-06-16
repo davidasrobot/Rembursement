@@ -25,5 +25,5 @@ Route::group(['prefix' => 'admin'], function () {
 Auth::routes();
 
 Route::get('/', 'RembursementController@index')->name('home');
-Route::get('/rembursement/create', 'RembursementController@create');
+Route::get('/list', 'RembursementController@create');
 Route::post('/rembursement', 'RembursementController@store');
